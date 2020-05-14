@@ -1,4 +1,14 @@
+import sys
+import time
 from room import Room
+from player import Player
+
+def Delay_print(s):
+    for c in s:
+        sys.stdout.write(c)
+        sys.stdout.flush()
+        time.sleep(0.05)
+
 
 # Declare all the rooms
 
@@ -38,14 +48,52 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+print('Welcome to Jack the Adventurer!!')
+
+Jack = Player("Jack The adventurer", room['outside'], ['SCANNER', 'BACKPACK', 'WEAPON'])
 
 # Write a loop that:
-#
+# print( Delay_print("You are currently in the " + Jack.active_room.name + ".\n" + Jack.active_room.description + "\n\n"))
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
 # * Waits for user input and decides what to do.
-#
+def current_room(player):
+    print( Delay_print("You are currently in the " + Jack.active_room.name + ".\n" + Jack.active_room.description + "\n\n"))
+current_room(Jack)
+move = 0
+while move != 'q':
+    move = input('choose a direction N E S W: ')
+    move = move.lower()
+    if move == 'n':
+        if(not hasattr(Jack.active_room, "n_to")):
+            print('\nnothing to see here  go back to your track \n')
+        else:
+         Jack.active_room = Jack.active_room.n_to
+         print(Delay_print("You have entered to the "" " +Jack.active_room.name+".\n" ))
+    elif move == 'e':
+        if(not hasattr(Jack.active_room,"e_to")):
+            print(Delay_print('\nnothing to see here  go back to your track \n'))
+        else:
+            Jack.active_room = Jack.active_room.e_to
+    elif move == 's':
+        if(not hasattr(Jack.active_room,"s_to")):
+            print(Delay_print('\nnothing to see here  go back to your track \n'))
+        else: 
+            Jack.active_room = Jack.active_room.s_to
+    elif move == 'w':
+        
+        if(not hasattr(Jack.active_room,"w_to")):
+            print(Delay_print('\nnothing to see here  go back to your track \n'))
+        else: 
+            Jack.active_room = Jack.active_room.w_to
+    elif move == 'q':
+        print("game over")  
+    else: 
+        print('PLEASE ENTER A VALID DIRECTION')
+         
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
-#
+#playerInput = ''
+
+        # print(f'You just picked up a {playerInput}')
 # If the user enters "q", quit the game.
